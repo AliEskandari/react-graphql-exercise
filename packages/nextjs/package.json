@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "@floating-ui/react-dom": "^2.1.1",
     "@headlessui-float/react": "^0.14.0",
     "@headlessui/react": "^1.7.19",
