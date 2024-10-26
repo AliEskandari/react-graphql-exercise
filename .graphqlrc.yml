@@ -1,3 +1,0 @@
-# .graphqlrc.yml
-schema: "packages/nextjs/schema.graphql"
-documents: "packages/nextjs/src/**/*.{graphql,js,ts,jsx,tsx}"

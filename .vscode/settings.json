@@ -1,10 +1,9 @@
 {
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#1A2767",
-        "titleBar.activeBackground": "#243790",
-        "titleBar.activeForeground": "#FAFBFE"
-    },
-    // "typescript.tsdk": "node_modules/typescript/lib",
-    // "typescript.enablePromptUseWorkspaceTsdk": true
-    "github-enterprise.uri": "https://github.sc-corp.net"
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#1A2767",
+    "titleBar.activeBackground": "#243790",
+    "titleBar.activeForeground": "#FAFBFE"
+  }
+  // "typescript.tsdk": "node_modules/typescript/lib",
+  // "typescript.enablePromptUseWorkspaceTsdk": true
 }
