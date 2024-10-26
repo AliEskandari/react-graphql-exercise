@@ -1,0 +1,12 @@
+# List of folders and files that dont get pushed to the repo
+notes
+node_modules
+.env
+env.gs
+token.json
+creds.json
+credentials.json
+
+dist
+.DS_Store
+tsconfig.tsbuildinfo

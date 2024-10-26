@@ -1,0 +1,46 @@
+{
+  "name": "apollo",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc || true",
+    "build:watch": "tsc -w",
+    "start": "node -r tsconfig-paths/register ./dist/server.js",
+    "dev": "nodemon",
+    "registry:config": "npx google-artifactregistry-auth --credential-config=.npmrc",
+    "elasticsearch:setup": "npx ts-node ./src/scripts/setup-elasticsearch.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.5.0",
+    "nodemon": "^3.1.4",
+    "@graphql-tools/load-files": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "type-fest": "^4.26.1",
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "@google-cloud/firestore": "^7.9.0",
+    "@graphql-tools/import": "^7.0.1",
+    "@graphql-tools/load-files": "^7.0.0",
+    "@people-tech/env": "^1.0.0",
+    "@people-tech/logger": "^1.0.6",
+    "@scure/base": "^1.1.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "firebase-admin": "^11.4.1",
+    "googleapis": "^144.0.0",
+    "graphql": "^16.9.0",
+    "graphql-scalars": "^1.23.0",
+    "lodash": "^4.17.21",
+    "next-auth": "^4.24.8",
+    "typesaurus": "^10.7.0",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

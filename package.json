@@ -1,0 +1,29 @@
+{
+  "name": "engagement-management",
+  "version": "1.0.0",
+  "description": "sway using for projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "registry:login": "npx google-artifactregistry-auth",
+    "generate": "graphql-codegen",
+    "generate:watch": "graphql-codegen --watch",
+    "dev": "lerna run dev --stream"
+  },
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@eddeee888/gcg-typescript-resolver-files": "^0.10.4",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/schema-ast": "^4.1.0",
+    "@parcel/watcher": "^2.4.1",
+    "graphql": "^16.9.0",
+    "lerna": "^8.1.8"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.15.1"
+  }
+}

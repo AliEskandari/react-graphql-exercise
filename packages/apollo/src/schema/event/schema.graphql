@@ -1,0 +1,10 @@
+type Event {
+  title: String
+  description: String
+  startDate: String
+  endDate: String
+}
+
+type Query {
+  events: [Event]
+}

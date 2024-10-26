@@ -1,0 +1,48 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "swayrepo",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bullseye",
+	"features": {
+		"ghcr.io/dhoeric/features/google-cloud-cli:1": {
+			"INSTALL_GKEGCLOUDAUTH_PLUGIN": true
+		},
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"Prisma.prisma",
+				"Cardinal90.multi-cursor-case-preserve",
+				"bradlc.vscode-tailwindcss",
+				"YoavBls.pretty-ts-errors",
+				"GraphQL.vscode-graphql",
+				"GitHub.vscode-pull-request-github"
+			],
+			"settings": {
+				"js/ts.implicitProjectConfig.checkJs": true,
+				"typescript.validate.enable": true,
+				"javascript.validate.enable": true,
+				"files.associations": {
+					".env.*": "properties",
+					"*.env": "properties",
+				}
+			}
+		}
+	},
+	"mounts": [
+		"source=${localEnv:HOME}/.npmrc,target=/home/node/.npmrc,type=bind,consistency=delegated",
+		"source=${localEnv:HOME}/.config/gcloud,target=/home/node/.config/gcloud,type=bind"
+	],
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
