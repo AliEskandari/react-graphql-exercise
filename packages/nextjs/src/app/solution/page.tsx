@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { GraphQLClient, gql } from "graphql-request";
-const client = new GraphQLClient("http://localhost:4000");
 
+const client = new GraphQLClient("http://localhost:4000"); // Replace with actual GraphQL server URL
+
+// TypeScript interfaces for Event and User
 interface User {
   id: string;
   name: string;

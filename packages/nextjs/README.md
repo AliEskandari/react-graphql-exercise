@@ -1,34 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Part 1
 
-## Getting Started
+1. Create User and Event type
 
-First, run the development server:
+```ts
+type User = {
+  id: string;
+  email: string;
+};
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+type Event = {
+  id: string;
+  title: string;
+  attendees: User[];
+};
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Write Graphql query to get all events
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```jsx
+const GET_EVENTS = gql`
+  query Events {
+    events {
+      id
+      title
+      attendees {
+        email
+      }
+    }
+  }
+`;
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Fetch and store the events in a state variable
 
-## Learn More
+```jsx
+function Page() {
+  const [events, setEvents] = useState([]);
 
-To learn more about Next.js, take a look at the following resources:
+  useEffect(() => {
+    async function fetchData() {
+      const resp = await client.request(GET_EVENTS);
+      setEvents(resp.events);
+    }
+    fetchData();
+  }, []);
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Display events and attendees in a list
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```jsx
+function Page() {
+  const [events, setEvents] = useState([]);
 
-## Deploy on Vercel
+  useEffect(() => {
+    async function fetchData() {
+      const resp = await client.request(GET_EVENTS);
+      setEvents(resp.events);
+    }
+    fetchData();
+  }, []);
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  return (
+    <div>
+      {events.map((event) => {
+        const attendees = event.attendees;
+        return (
+          <div key={event.id}>
+            {event.title}
+            <div>
+              {attendees.map((attendee) => {
+                return <li>{attendee.email}</li>;
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. Discussion: What is the "key" prop for? Why does React want you to set it?
+
+Answer: Helps react render efficiently by knowing which nodes are which using the key prop. The key prop helps React efficiently identify which items have changed, been added, or been removed within lists.
+
+6. Discussion: Assume there were 1M events. How could we optimize our application to be able to create a pleasant UX.
+
+Answer: Frontend caching, pagination, and lazy-loading / virtualization

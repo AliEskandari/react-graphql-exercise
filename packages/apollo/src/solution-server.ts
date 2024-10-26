@@ -2,7 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { v4 as uuidv4 } from "uuid";
 
-// Step 1: Define TypeScript types for Event and User
+// TypeScript interfaces for User and Event
 type User = {
   id: string;
   name: string;
@@ -16,23 +16,37 @@ type Event = {
   attendees: User[];
 };
 
-// Sample data for events and users
+// Sample data for users and events
+const users: User[] = [
+  { id: "1", name: "Alice", email: "alice@snap.com" },
+  { id: "2", name: "Bob", email: "bob@snap.com" },
+  { id: "3", name: "Charlie", email: "charlie@snap.com" },
+];
+
 const events: Event[] = [
-  { id: "1", title: "Birthday Party", date: "2024-12-01", attendees: [] },
-  { id: "2", title: "Conference", date: "2024-11-15", attendees: [] },
+  {
+    id: "1",
+    title: "Birthday Party",
+    date: "2024-12-01",
+    attendees: [users[0]!],
+  },
+  {
+    id: "2",
+    title: "Conference",
+    date: "2024-11-15",
+    attendees: [users[1]!, users[2]!],
+  },
 ];
 
 const typeDefs = `#graphql
   type User {
-    id: ID!
-    name: String!
+    id: String!
     email: String!
   }
 
   type Event {
-    id: ID!
+    id: String!
     title: String!
-    date: String!
     attendees: [User!]!
   }
 
@@ -43,15 +57,13 @@ const typeDefs = `#graphql
   type Mutation {
     addEvent(title: String!, date: String!): Event!
     deleteEvent(id: ID!): Boolean
-    addAttendee(eventId: ID!, name: String!, email: String!): User!
+    addAttendee(eventId: ID!, email: String!): User!
   }
 `;
 
 const resolvers = {
   Query: {
-    events: (): Event[] => {
-      return events;
-    },
+    events: (): Event[] => events,
   },
   Mutation: {
     addEvent: (
