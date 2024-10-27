@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, ChangeEvent } from "react";
 import { GraphQLClient, gql } from "graphql-request";
-const client = new GraphQLClient("http://localhost:4000");
+const client = new GraphQLClient("https://kq4j7q-4000.csb.app");
 
 /*
 Part 1: Fetching Events and Attendees
