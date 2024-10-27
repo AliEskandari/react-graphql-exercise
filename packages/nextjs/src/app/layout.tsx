@@ -1,4 +1,3 @@
-import QueryClientProvider from "@/components/wrappers/query-client-provider/query-client-provider";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -14,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="">
-        <QueryClientProvider>{children}</QueryClientProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
