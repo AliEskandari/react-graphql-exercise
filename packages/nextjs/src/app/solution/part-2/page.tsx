@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { GraphQLClient, gql } from "graphql-request";
 const client = new GraphQLClient("http://localhost:4000");
 
@@ -44,8 +44,17 @@ const GET_EVENTS = gql`
   }
 `;
 
+const ADD_ATTENDEE = gql`
+  mutation AddAttendee($email: String!) {
+    addAttendee(email: $email) {
+      id
+    }
+  }
+`;
+
 export default function Page() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
     async function fetchData() {
@@ -54,6 +63,13 @@ export default function Page() {
     }
     fetchData();
   }, []);
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+  async function handleClickSubmit() {
+    const resp = await client.request(ADD_ATTENDEE, { email });
+  }
 
   return (
     <div>
@@ -70,6 +86,8 @@ export default function Page() {
           </div>
         );
       })}
+      <input value={email} onChange={handleChange} />
+      <button onClick={handleClickSubmit}>Submit</button>
     </div>
   );
 }

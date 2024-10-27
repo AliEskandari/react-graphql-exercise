@@ -1,38 +1,37 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { v4 as uuidv4 } from "uuid";
+import { generateId } from "./modules/functions/generate-id";
+import { Event, User } from "./modules/types";
 
-// Step 1: Define TypeScript types for Event and User
-type User = {
-  id: string;
-  name: string;
-  email: string;
-};
+// Sample data for users and events
+const users: User[] = [
+  { id: "1", email: "alice@snap.com" },
+  { id: "2", email: "bob@snap.com" },
+  { id: "3", email: "charlie@snap.com" },
+];
 
-type Event = {
-  id: string;
-  title: string;
-  date: string;
-  attendees: User[];
-};
-
-// Sample data for events and users
 const events: Event[] = [
-  { id: "1", title: "Birthday Party", date: "2024-12-01", attendees: [] },
-  { id: "2", title: "Conference", date: "2024-11-15", attendees: [] },
+  {
+    id: "1",
+    title: "Birthday Party",
+    attendees: [users[0]!],
+  },
+  {
+    id: "2",
+    title: "Conference",
+    attendees: [users[1]!, users[2]!],
+  },
 ];
 
 const typeDefs = `#graphql
   type User {
-    id: ID!
-    name: String!
+    id: String!
     email: String!
   }
 
   type Event {
-    id: ID!
+    id: String!
     title: String!
-    date: String!
     attendees: [User!]!
   }
 
@@ -41,9 +40,7 @@ const typeDefs = `#graphql
   }
 
   type Mutation {
-    addEvent(title: String!, date: String!): Event!
-    deleteEvent(id: ID!): Boolean
-    addAttendee(eventId: ID!, name: String!, email: String!): User!
+    addAttendee(email: String!): User!
   }
 `;
 
@@ -54,28 +51,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    addEvent: (
-      _: any,
-      { title, date }: { title: string; date: string }
-    ): Event => {
-      const newEvent = { id: uuidv4(), title, date, attendees: [] };
-      events.push(newEvent);
-      return newEvent;
-    },
-    deleteEvent: (_: any, { id }: { id: string }): boolean => {
-      const index = events.findIndex((event) => event.id === id);
-      if (index === -1) return false;
-      events.splice(index, 1);
-      return true;
-    },
-    addAttendee: (
-      _: any,
-      { eventId, name, email }: { eventId: string; name: string; email: string }
-    ): User | null => {
-      const event = events.find((event) => event.id === eventId);
-      if (!event) return null;
-      const newUser = { id: uuidv4(), name, email };
-      event.attendees.push(newUser);
+    addAttendee: (_: any, { email }: { email: string }): User | null => {
+      const newUser = { id: generateId(), email };
+      events.at(-1)?.attendees.push(newUser);
       return newUser;
     },
   },
