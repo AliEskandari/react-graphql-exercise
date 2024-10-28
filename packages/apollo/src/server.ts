@@ -3,7 +3,6 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { generateId } from "./modules/functions/generate-id";
 import { Event, User } from "./modules/types";
 
-// Sample data for users and events
 const users: User[] = [
   { id: "1", email: "alice@snap.com" },
   { id: "2", email: "bob@snap.com" },
